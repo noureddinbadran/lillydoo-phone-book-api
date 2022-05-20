@@ -6,10 +6,13 @@ namespace App\Service;
 
 use App\Entity\Client;
 use App\Entity\Contact;
+use App\Helpers\EnumManager\Enums\GeneralEnum;
+use App\Helpers\Exceptions\UserException;
 use App\Repository\ClientRepository;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -56,6 +59,15 @@ class ContactService
             $this->entityManager->rollback();
             throw $e;
         }
+    }
+
+    public function destroy($id)
+    {
+        $contact = $this->contactRepository->findOneBy(['id' => $id]);
+        if(!$contact)
+            throw new UserException($this->translator->trans('Contact not found'), GeneralEnum::NOT_FOUND, Response::HTTP_NOT_FOUND);
+        $this->entityManager->remove($contact);
+        $this->entityManager->flush();
     }
 
     // magic method for undefined methods to redirect for repo

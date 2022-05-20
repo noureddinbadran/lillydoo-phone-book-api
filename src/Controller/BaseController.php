@@ -14,9 +14,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseController extends AbstractController
 {
-    private TranslatorInterface $translator;
-    private SerializerInterface $serializer;
-    private ValidatorInterface $validator;
+    protected TranslatorInterface $translator;
+    protected SerializerInterface $serializer;
+    protected ValidatorInterface $validator;
     protected LoggerInterface $logger;
 
     public function __construct(TranslatorInterface $translator, SerializerInterface $serializer, ValidatorInterface $validator, LoggerInterface $logger)

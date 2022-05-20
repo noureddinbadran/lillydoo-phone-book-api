@@ -21,9 +21,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ContactController extends BaseController
 {
-
     /**
-     * @Route("", methods={"GET"})
+     * @Route("", methods={"GET"}, name="contacts.index")
      * @OA\Get(
      *     path="/api/contacts",
      *     description="Use this API to get the contacts",
@@ -37,6 +36,25 @@ class ContactController extends BaseController
     {
         $contacts = $contactService->findAll();
         return $this->successResponse($contacts);
+    }
+
+    /**
+     * @Route("/{id}", methods={"GET"}, name="contacts.show")
+     * @OA\Get(
+     *     path="/api/contacts",
+     *     description="Use this API to get a specific contact",
+     *     @OA\Response(
+     *          response="200",
+     *          description="You will receive an object of the contact"
+     *      ),
+     * )
+     */
+    public function show(Request $request, ContactService $contactService, $id)
+    {
+        $contact = $contactService->findOneBy(['id' => $id]);
+        if(!$contact)
+            return $this->exceptionResponse(new UserException($this->translator->trans('Contact not found'), GeneralEnum::NOT_FOUND, Response::HTTP_NOT_FOUND));
+        return $this->successResponse($contact);
     }
 
     /**
@@ -69,7 +87,7 @@ class ContactController extends BaseController
      * ),
      *     @OA\Response(
      *          response="200",
-     *          description="Client created!"
+     *          description="Contact created!"
      *      ),
      *     @OA\Response(
      *          response="400",
@@ -77,7 +95,7 @@ class ContactController extends BaseController
      *      ),
      *     @OA\Response(
      *          response="422",
-     *          description="Mssing required data"
+     *          description="Missing required data"
      *      ),
      *     @OA\Response(
      *          response=500,
@@ -100,6 +118,27 @@ class ContactController extends BaseController
             $contactService->addNewContact($data, $client);
             return $this->successResponse();
 
+        } catch (\Throwable $e) {
+            return $this->exceptionResponse($e);
+        }
+    }
+
+    /**
+     * @Route("/{id}", methods={"DELETE"}, name="contacts.destroy")
+     * @OA\Get(
+     *     path="/api/contacts",
+     *     description="Use this API to delete a specific contact",
+     *     @OA\Response(
+     *          response="200",
+     *          description="You will delete a specific contact"
+     *      ),
+     * )
+     */
+    public function destroy(Request $request, ContactService $contactService, $id)
+    {
+        try {
+        $contact = $contactService->destroy($id);
+        return $this->successResponse($contact);
         } catch (\Throwable $e) {
             return $this->exceptionResponse($e);
         }
