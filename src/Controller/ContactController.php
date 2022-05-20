@@ -51,10 +51,15 @@ class ContactController extends BaseController
      */
     public function show(Request $request, ContactService $contactService, $id)
     {
-        $contact = $contactService->findOneBy(['id' => $id]);
-        if(!$contact)
-            return $this->exceptionResponse(new UserException($this->translator->trans('Contact not found'), GeneralEnum::NOT_FOUND, Response::HTTP_NOT_FOUND));
-        return $this->successResponse($contact);
+        try
+        {
+            $contact = $contactService->findOneBy(['id' => $id]);
+            if(!$contact)
+                throw new UserException($this->translator->trans('Contact not found'), GeneralEnum::NOT_FOUND, Response::HTTP_NOT_FOUND);
+            return $this->successResponse($contact);
+        } catch (\Throwable $e) {
+            return $this->exceptionResponse($e);
+        }
     }
 
     /**
@@ -142,5 +147,22 @@ class ContactController extends BaseController
         } catch (\Throwable $e) {
             return $this->exceptionResponse($e);
         }
+    }
+
+    /**
+     * @Route("/search/{name}", methods={"GET"}, name="contacts.search")
+     * @OA\Get(
+     *     path="/api/contacts",
+     *     description="Use this API to search for contacts by name",
+     *     @OA\Response(
+     *          response="200",
+     *          description="You will get an array of matched objects"
+     *      ),
+     * )
+     */
+    public function search(Request $request, ContactService $contactService, $name)
+    {
+            $contacts = $contactService->searchByName($name);
+            return $this->successResponse($contacts);
     }
 }

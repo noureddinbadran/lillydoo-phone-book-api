@@ -70,6 +70,15 @@ class ContactService
         $this->entityManager->flush();
     }
 
+    public function searchByName($name)
+    {
+        return $this->contactRepository->createQueryBuilder('c')
+            ->andWhere('c.first_name LIKE :name')
+            ->setParameter('name', "%$name%")
+            ->getQuery()
+            ->getResult();
+    }
+
     // magic method for undefined methods to redirect for repo
     public function __call($method, $args)
     {
