@@ -21,6 +21,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ContactController extends BaseController
 {
+
+    /**
+     * @Route("", methods={"GET"})
+     * @OA\Get(
+     *     path="/api/contacts",
+     *     description="Use this API to get the contacts",
+     *     @OA\Response(
+     *          response="200",
+     *          description="You will receive an array of the contacts"
+     *      ),
+     * )
+     */
+    public function index(Request $request, ContactService $contactService)
+    {
+        $contacts = $contactService->findAll();
+        return $this->successResponse($contacts);
+    }
+
     /**
      * @Route("", methods="POST", name="contacts.store")
      * @OA\Post(

@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Client;
 use App\Entity\Contact;
 use App\Repository\ClientRepository;
+use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -15,15 +16,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ContactService
 {
 
-private EntityManagerInterface $entityManager;
-private TranslatorInterface $translator;
+    private EntityManagerInterface $entityManager;
+    private TranslatorInterface $translator;
+    private ContactRepository $contactRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        ContactRepository $contactRepository
     ) {
         $this->entityManager = $entityManager;
         $this->translator = $translator;
+        $this->contactRepository = $contactRepository;
     }
 
     public function addNewContact($data, $client)
@@ -52,5 +56,11 @@ private TranslatorInterface $translator;
             $this->entityManager->rollback();
             throw $e;
         }
+    }
+
+    // magic method for undefined methods to redirect for repo
+    public function __call($method, $args)
+    {
+        return $this->contactRepository->$method(...$args);
     }
 }
