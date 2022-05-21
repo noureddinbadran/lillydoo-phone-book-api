@@ -19,7 +19,7 @@ class ClientTest extends WebTestCase
     private $firstName;
     private $lastName;
     private $username;
-private ?EntityManager $entityManager;
+    private ?EntityManager $entityManager;
 
     protected function setUp(): void
     {

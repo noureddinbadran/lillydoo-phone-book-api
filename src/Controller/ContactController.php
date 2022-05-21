@@ -41,7 +41,7 @@ class ContactController extends BaseController
     /**
      * @Route("/{id}", methods={"GET"}, name="contacts.show")
      * @OA\Get(
-     *     path="/api/contacts",
+     *     path="/api/contacts/{id}",
      *     description="Use this API to get a specific contact",
      *     @OA\Response(
      *          response="200",
@@ -124,6 +124,8 @@ class ContactController extends BaseController
             return $this->successResponse();
 
         } catch (\Throwable $e) {
+            echo $e->getMessage();
+            die();
             return $this->exceptionResponse($e);
         }
     }
@@ -131,7 +133,7 @@ class ContactController extends BaseController
     /**
      * @Route("/{id}", methods={"DELETE"}, name="contacts.destroy")
      * @OA\Get(
-     *     path="/api/contacts",
+     *     path="/api/contacts/{id}",
      *     description="Use this API to delete a specific contact",
      *     @OA\Response(
      *          response="200",
@@ -152,7 +154,7 @@ class ContactController extends BaseController
     /**
      * @Route("/search/{name}", methods={"GET"}, name="contacts.search")
      * @OA\Get(
-     *     path="/api/contacts",
+     *     path="/api/contacts/search/{name}",
      *     description="Use this API to search for contacts by name",
      *     @OA\Response(
      *          response="200",

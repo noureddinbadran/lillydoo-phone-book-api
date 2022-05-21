@@ -20,10 +20,10 @@ trait Helpers
         ]);
     }
 
-    public  function getAuthToken()
+    public function getAuthToken()
     {
-        $this->firstName = base64_encode(random_bytes(10));
-        $this->lastName = base64_encode(random_bytes(10));
+        $this->firstName = $this->getRandomString();
+        $this->lastName = $this->getRandomString();
         $this->username = $this->firstName . $this->lastName .'@gmail.com';
 
         // register a new client
@@ -41,6 +41,19 @@ trait Helpers
 
         $jsonResponse = json_decode($response->getContent());
         return $jsonResponse->token;
+    }
+
+    public function getRandomString($length = 10)
+    {
+        $str = base64_encode(random_bytes($length));
+        $str = str_replace('/', '', $str);
+        $str = str_replace('\\', '', $str);
+        return $str;
+    }
+
+    public function getRandomNumber()
+    {
+        return rand(1111111111, 9999999999);
     }
 
 
