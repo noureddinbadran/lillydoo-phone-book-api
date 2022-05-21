@@ -49,17 +49,18 @@ class SearchForContactsByNameTest extends BaseContact
         $this->assertEquals($jsonResponse['metaData']['key'], GeneralEnum::SUCCESS);
         $this->assertEquals($jsonResponse['metaData']['message'], "");
         $this->assertTrue(is_array($jsonResponse['data']));
+        $this->assertTrue($jsonResponse['data'] > 0);
 
         /**
          * the assertion statements for contact
          */
-        $this->assertEquals($jsonResponse['data'][0]['id'], $contact->getId());
-        $this->assertEquals($jsonResponse['data'][0]['firstName'], $contact->getFirstName());
-        $this->assertEquals($jsonResponse['data'][0]['lastName'], $contact->getLastName());
-        $this->assertEquals($jsonResponse['data'][0]['email'], $contact->getEmail());
-        $this->assertEquals($jsonResponse['data'][0]['address'], $contact->getAddress());
-        $this->assertEquals($jsonResponse['data'][0]['phoneNumber'], $contact->getPhoneNumber());
-        $this->assertEquals($jsonResponse['data'][0]['picture'], $contact->getPicture());
+        $this->assertEquals($jsonResponse['data']['items'][0]['id'], $contact->getId());
+        $this->assertEquals($jsonResponse['data']['items'][0]['firstName'], $contact->getFirstName());
+        $this->assertEquals($jsonResponse['data']['items'][0]['lastName'], $contact->getLastName());
+        $this->assertEquals($jsonResponse['data']['items'][0]['email'], $contact->getEmail());
+        $this->assertEquals($jsonResponse['data']['items'][0]['address'], $contact->getAddress());
+        $this->assertEquals($jsonResponse['data']['items'][0]['phoneNumber'], $contact->getPhoneNumber());
+        $this->assertEquals($jsonResponse['data']['items'][0]['picture'], $contact->getPicture());
     }
 
     public function testIamTryingToSearchForContactsByNameWithoutToken(): void
