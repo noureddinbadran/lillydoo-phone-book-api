@@ -14,5 +14,5 @@ final class GeneralEnum
     const INVALID= 'invalid';
     const INVALID_CREDENTIALS = 'invalid_credentials';
     const NOT_FOUND = 'not_found';
-    const ALREADY_RATED = 'already_rated';
+    const ALREADY_EXISTED = 'already_existed';
 }

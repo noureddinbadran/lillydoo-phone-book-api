@@ -142,8 +142,6 @@ class ContactController extends BaseController
             return $this->successResponse();
 
         } catch (\Throwable $e) {
-            echo $e->getMessage();
-            die();
             return $this->exceptionResponse($e);
         }
     }

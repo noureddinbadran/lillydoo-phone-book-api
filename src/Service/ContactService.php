@@ -81,6 +81,18 @@ class ContactService
             // begin a new transaction
             $this->entityManager->beginTransaction();
 
+            // check if the email or phone number already existed
+            $obj = $this->contactRepository->createQueryBuilder('c')
+                ->andWhere("c.email = :email")
+                ->orWhere("c.phone_number = :phone_number")
+                ->setParameter('email', $data['email'])
+                ->setParameter('phone_number', $data['phone_number'])
+                    ->getQuery()
+                ->getResult();
+
+            if($obj)
+                throw new UserException('The email or the phone number is already existed!', GeneralEnum::ALREADY_EXISTED, Response::HTTP_UNPROCESSABLE_ENTITY);
+
             $contact = $given_contact ?? new Contact();
             $contact->setFirstName($data['first_name']);
             $contact->setLastName($data['last_name']);
