@@ -3,13 +3,10 @@
 namespace App\Tests\Controller\Contacts;
 
 use App\Helpers\EnumManager\Enums\GeneralEnum;
-use App\Tests\Controller\Traits\ContactTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 class DeleteContactTest extends BaseContact
 {
-    use ContactTrait;
-
     public function testIamTryingToDeleteAcontactById(): void
     {
         /**

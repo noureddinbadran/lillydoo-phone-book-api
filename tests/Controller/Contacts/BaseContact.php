@@ -7,6 +7,7 @@ use App\Entity\Contact;
 use App\Helpers\EnumManager\Enums\GeneralEnum;
 use App\Repository\ClientRepository;
 use App\Tests\Controller\BaseTestCase;
+use App\Tests\Controller\Traits\ContactTrait;
 use App\Tests\Controller\Traits\Helpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseContact extends BaseTestCase
 {
-    use Helpers;
+    use Helpers, ContactTrait;
 
     protected $firstName;
     protected $lastName;

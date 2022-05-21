@@ -3,14 +3,10 @@
 namespace App\Tests\Controller\Contacts;
 
 use App\Helpers\EnumManager\Enums\GeneralEnum;
-use App\Tests\Controller\Traits\ContactTrait;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
 
 class SearchForContactsByNameTest extends BaseContact
 {
-    use ContactTrait;
-
     public function testIamTryingToSearchForContactsByName(): void
     {
         /**

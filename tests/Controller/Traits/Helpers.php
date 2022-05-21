@@ -3,6 +3,7 @@
 namespace App\Tests\Controller\Traits;
 
 use Symfony\Component\HttpClient\HttpClient;
+use DateTime;
 
 trait Helpers
 {
@@ -49,6 +50,16 @@ trait Helpers
         $str = str_replace('/', '', $str);
         $str = str_replace('\\', '', $str);
         return $str;
+    }
+
+    public function getRandomEmail()
+    {
+        return $this->getRandomString() . '@gmail.com';
+    }
+
+    public function getRandomDate()
+    {
+        return (new DateTime())->format('d-m-Y');
     }
 
     public function getRandomNumber()
