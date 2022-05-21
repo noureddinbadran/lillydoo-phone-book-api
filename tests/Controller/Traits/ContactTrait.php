@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait ContactTrait
 {
-    public function initiateAnewContact($first_name = null, $last_name = null)
+    public function initiateAnewContact($first_name = null, $last_name = null, $given_email = null)
     {
         $email = $this->getRandomString() . '@gmail.com';
         $url = $this->appURL . '/api/contacts';
@@ -22,7 +22,7 @@ trait ContactTrait
                 'address' => $this->getRandomString(),
                 'phone_number' => (string)$this->getRandomNumber(),
                 'birthday' => (new DateTime())->format('d-m-Y'),
-                'email' => $email,
+                'email' => $given_email ?? $email,
                 'picture' => $this->getRandomString(),
             ]
         ]);

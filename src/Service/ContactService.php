@@ -92,7 +92,7 @@ class ContactService
                     ->getResult();
 
                 if ($obj)
-                    throw new UserException('The email or the phone number is already existed!', GeneralEnum::ALREADY_EXISTED, Response::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new UserException($this->translator->trans('The email or the phone number is already existed!'), GeneralEnum::ALREADY_EXISTED, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             $contact = $given_contact ?? new Contact();

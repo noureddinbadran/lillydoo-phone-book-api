@@ -63,6 +63,52 @@ class StoreContactTest extends BaseContact
         $this->assertEquals($jsonResponse['metaData']['message'], "");
     }
 
+    public function testIamTryingToAddAnewContactWithAlreadyExistedEmail(): void
+    {
+        /**
+         * store & fetch a new contact from the DB directly
+         */
+        $email = $this->getRandomEmail();
+        $contact = $this->initiateAnewContact($this->getRandomString(), $this->getRandomString(), $email);
+
+        /**
+         * Trying to add a new contact with the already used email
+         */
+        $url = $this->appURL . '/api/contacts';
+        $response = $this->client->request('POST', $url , [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->authToken
+            ],
+            'json' => [
+                'first_name' => $this->firstName,
+                'last_name' => $this->lastName,
+                'address' => $this->address,
+                'phone_number' => (string)$this->phone_number,
+                'birthday' => $this->birthday,
+                'email' => $email, // already used email
+                'picture' => $this->picture,
+            ]
+        ]);
+
+        /**
+         * check the status of the response
+         */
+        $statusCode = $response->getStatusCode();
+        $jsonResponse = json_decode($response->getContent(false), true);
+
+        /**
+         * check the request status code
+         */
+        $this->assertTrue($statusCode == Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        /**
+         * check the response data
+         */
+        $this->assertEquals($jsonResponse['metaData']['status'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertEquals($jsonResponse['metaData']['key'], GeneralEnum::ALREADY_EXISTED);
+        $this->assertEquals($jsonResponse['metaData']['message'], "The email or the phone number is already existed!");
+    }
+
 
     public function testIamTryingToAddAnewContactWithoutRequiredData(): void
     {
