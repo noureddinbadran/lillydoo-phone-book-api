@@ -90,7 +90,7 @@ Generate your private.pem & public.pem for JWT-TOKEN as follows: <br>
 
 <li>
 run the unit test by running the command <br>
-    vendor/bin/phpunit
+    vendor\bin\phpunit
 </li>
 </ol>
 
