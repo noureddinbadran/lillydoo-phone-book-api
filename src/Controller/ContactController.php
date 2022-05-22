@@ -100,7 +100,7 @@ class ContactController extends BaseController
      *               @OA\Property(property="phone_number", type="string",description="It represents the phone number of the contact"),
      *               @OA\Property(property="birthday", type="date",description="It represents the birthday of the contact"),
      *               @OA\Property(property="email", type="string",description="It represents the email of the contact"),
-     *               @OA\Property(property="picture", type="string",description="It represents the picture of the contact"),
+     *               @OA\Property(property="picture", type="string",description="It represents the picture of the contact(base64 encoding)"),
      *
      *              example={"first_name": "Nour Eddin",
      *                       "last_name": "Badran",
@@ -167,7 +167,7 @@ class ContactController extends BaseController
      *               @OA\Property(property="phone_number", type="string",description="It represents the phone number of the contact"),
      *               @OA\Property(property="birthday", type="date",description="It represents the birthday of the contact"),
      *               @OA\Property(property="email", type="string",description="It represents the email of the contact"),
-     *               @OA\Property(property="picture", type="string",description="It represents the picture of the contact"),
+     *               @OA\Property(property="picture", type="string",description="It represents the picture of the contact(base64 encoding)"),
      *
      *              example={"first_name": "Nour Eddin",
      *                       "last_name": "Badran",
