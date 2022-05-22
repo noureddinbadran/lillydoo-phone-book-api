@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Helpers\Exceptions\UserException;
 use App\Helpers\EnumManager\Enums\GeneralEnum;
 use App\Repository\ClientRepository;
+use App\Resources\ContactResource;
 use App\Service\AuthService;
 use App\Service\ContactService;
 use App\Validator\ClientValidator;
@@ -78,7 +79,7 @@ class ContactController extends BaseController
             $contact = $contactService->findOneBy(['id' => $id]);
             if(!$contact)
                 throw new UserException($this->translator->trans('Contact not found'), GeneralEnum::NOT_FOUND, Response::HTTP_NOT_FOUND);
-            return $this->successResponse($contact);
+            return $this->successResponse((new ContactResource($contact))->toArray());
         } catch (\Throwable $e) {
             return $this->exceptionResponse($e);
         }
@@ -218,7 +219,7 @@ class ContactController extends BaseController
                 throw new UserException($this->translator->trans('Contact not found'), GeneralEnum::NOT_FOUND, Response::HTTP_NOT_FOUND);
 
             $contact = $contactService->createOrUpdateContact($data, $contact);
-            return $this->successResponse($contact);
+            return $this->successResponse((new ContactResource($contact))->toArray());
         } catch (\Throwable $e) {
             return $this->exceptionResponse($e);
         }
