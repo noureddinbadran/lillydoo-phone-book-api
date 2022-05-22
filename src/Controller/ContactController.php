@@ -65,6 +65,10 @@ class ContactController extends BaseController
      *          response="200",
      *          description="You will receive an object of the contact"
      *      ),
+     *     @OA\Response(
+     *          response="404",
+     *          description="Contact not found"
+     *      ),
      * )
      */
     public function show(Request $request, ContactService $contactService, $id)
@@ -114,7 +118,7 @@ class ContactController extends BaseController
      *      ),
      *     @OA\Response(
      *          response="400",
-     *          description="Phone number has been take"
+     *          description="Email or Phone number have already used!"
      *      ),
      *     @OA\Response(
      *          response="422",
@@ -181,11 +185,15 @@ class ContactController extends BaseController
      *      ),
      *     @OA\Response(
      *          response="400",
-     *          description="Phone number has been take"
+     *          description="Email or Phone number have already used!"
      *      ),
      *     @OA\Response(
      *          response="422",
      *          description="Missing required data"
+     *      ),
+     *     @OA\Response(
+     *          response="404",
+     *          description="Contact not found"
      *      ),
      *     @OA\Response(
      *          response=500,
@@ -224,6 +232,10 @@ class ContactController extends BaseController
      *     @OA\Response(
      *          response="200",
      *          description="You will delete a specific contact"
+     *      ),
+     *     @OA\Response(
+     *          response="404",
+     *          description="Contact not found"
      *      ),
      * )
      */

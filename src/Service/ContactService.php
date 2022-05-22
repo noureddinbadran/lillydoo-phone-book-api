@@ -10,6 +10,7 @@ use App\Helpers\EnumManager\Enums\GeneralEnum;
 use App\Helpers\Exceptions\UserException;
 use App\Repository\ClientRepository;
 use App\Repository\ContactRepository;
+use App\Resources\ContactCollection;
 use App\Service\Traits\HelperTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -50,7 +51,7 @@ class ContactService
         $contactsQuery = $this->contactRepository->createQueryBuilder('c')
             ->orderBy('c.id', 'desc')
             ->getQuery();
-        return $this->paginate($contactsQuery, $page, $limit);
+        return $this->paginate($contactsQuery, $page, $limit, new ContactCollection());
     }
 
     /**
@@ -66,7 +67,7 @@ class ContactService
             ->setParameter('name', "%$name%")
             ->orderBy('c.id', 'desc')
             ->getQuery();
-        return $this->paginate($contactsQuery, $page, $limit);
+        return $this->paginate($contactsQuery, $page, $limit, new ContactCollection());
     }
 
     /**
@@ -92,7 +93,7 @@ class ContactService
                     ->getResult();
 
                 if ($obj)
-                    throw new UserException($this->translator->trans('The email or the phone number is already existed!'), GeneralEnum::ALREADY_EXISTED, Response::HTTP_UNPROCESSABLE_ENTITY);
+                    throw new UserException($this->translator->trans('The email or the phone number is already existed!'), GeneralEnum::ALREADY_EXISTED, Response::HTTP_BAD_REQUEST);
             }
 
             $contact = $given_contact ?? new Contact();

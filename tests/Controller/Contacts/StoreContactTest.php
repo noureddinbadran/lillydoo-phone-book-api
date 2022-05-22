@@ -99,12 +99,12 @@ class StoreContactTest extends BaseContact
         /**
          * check the request status code
          */
-        $this->assertTrue($statusCode == Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertTrue($statusCode == Response::HTTP_BAD_REQUEST);
 
         /**
          * check the response data
          */
-        $this->assertEquals($jsonResponse['metaData']['status'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        $this->assertEquals($jsonResponse['metaData']['status'], Response::HTTP_BAD_REQUEST);
         $this->assertEquals($jsonResponse['metaData']['key'], GeneralEnum::ALREADY_EXISTED);
         $this->assertEquals($jsonResponse['metaData']['message'], "The email or the phone number is already existed!");
     }

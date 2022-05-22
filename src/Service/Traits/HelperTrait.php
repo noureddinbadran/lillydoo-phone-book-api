@@ -2,6 +2,8 @@
 
 namespace App\Service\Traits;
 
+use App\Resources\ICollection;
+
 trait HelperTrait
 {
     /**
@@ -11,7 +13,7 @@ trait HelperTrait
      * @param int $limit
      * @return array
      */
-    public function paginate($query, $page = 1, $limit = 5)
+    public function paginate($query, $page = 1, $limit = 5, ICollection $collection)
     {
         $pagination  = $this->paginator->paginate(
             $query,
@@ -23,7 +25,7 @@ trait HelperTrait
         // Finalize the result set
         $pagerResult = [
             'count' => $pagination->getTotalItemCount(),
-            'items' => $pagination->getItems(),
+            'items' => $collection->toArray($pagination->getItems()),
             'limit' => $pagination->getItemNumberPerPage(),
             'current' => $pagination->getCurrentPageNumber()
         ];
